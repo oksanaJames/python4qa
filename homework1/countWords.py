@@ -46,7 +46,10 @@ def countWordAppearance():
                     wordCountsStorage.update({word: newWordCount})
                 else:
                     wordCountsStorage.update({word: wordCount})
-    print(wordCountsStorage)
+
+    for item in sorted(wordCountsStorage.items()):
+        word, value = item
+        print("'{}' present {} time(s)".format(word,value))
 
 
 def checkIfFileIsValid(fileLocation):

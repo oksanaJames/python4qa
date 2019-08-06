@@ -1,0 +1,34 @@
+﻿Colleagues, 
+
+I offer homework in the following form:
+Your task is to write a tic-tac-toe game. Recall that tic-tac-toe is a logic game for two players on a 3x3 square field.
+
+First, let's set the field. The field will be a one-dimensional list (list) with numbers from 1 to 9. To create, we will use the range () function. Draw it in ASCII printable characters— for example:
+ 
+gameboard = range(1,10)
+print ("-------------")
+for i in range(3):
+    print( "|", gameboard[0+i*3], "|", gameboard[1+i*3], "|", gameboard[2+i*3], "|")
+print("-------------")
+ 
+-------------
+| 1 | 2 | 3 |
+-------------
+| 4 | 5 | 6 |
+-------------
+| 7 | 8 | 9 |
+-------------
+
+On the basis of this field, write the code that checks the situation on the field, visualize it when enter values interactively, for example, the first move of the cross on field number 1, the second move of zero on field 2, and so on.
+Like this:
+
+-------------
+| X | O | 3 |
+-------------
+| 4 | 5 | 6 |
+-------------
+| 7 | 8 | 9 |
+-------------
+
+Provide the possibility draw or win by one of the parties. In this case, exit the game with an explanation of the result (Draw, X won, 0 won). Check for impossible moves with the ability to repeat the move.
+To check the situation in the game, use tuples, lists or sets - try not to use dictionaries. Deadline - August 6th.
