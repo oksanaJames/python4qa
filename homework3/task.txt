@@ -1,0 +1,12 @@
+As we agreed today, the new homework will consist in the implementation of the Hangman (Guess word) game. I repeat the rules:
+
+1.	Let the player pick a word from the file attached to the letter.
+2.	The program guesses based on the player's answers.
+3.	On the first move we show the number of letters in the word.
+4.	Application  analyzes the list available to it and offers the most likely letter (you can display the percentage of probability AND/OR the number of words from which to choose).
+5.	If the player agrees with the choice, then he/she writes out a word with letters in the correct positions.
+6.	If you do not agree, then the application gives the next option.
+7.	… and so on.
+
+When the word is guessed - print the word and the number of attempts.
+It is advisable to use the methods that I indicated in the lecture (also attached to the letter).
