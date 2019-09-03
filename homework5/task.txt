@@ -1,0 +1,17 @@
+﻿Let's work a little with the file system - try to bring some clarity to the search and creation of file system objects.
+
+Mandatory homework:
+Write a program that takes the path to the file as the first argument to the command line, and the file name as the second.
+You need to find out if a file or directory exists 
+
+(that is, display messages like "This directory does not exist", "The file does not exist" and etc.). 
+
+Hint:
+Use os.path to check if a file or directory exists.
+
+
+Advanced version:
+Same as first, but CREATE file and directory if doesn't exist. Print list of files with metadata such as file sizes, modification dates for any directory which is put as first argument.
+
+Hint:
+Use sys.getfilesystemencoding()  to check if file system is utf-8 compatible
