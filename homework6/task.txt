@@ -1,0 +1,29 @@
+this homework will be dedicated to working with csv as we agreed at our last meeting.
+Use our lecture #5 for references (attached)
+
+Mandatory:
+Write a command-line utility that takes  csv file as an input and displays the values for the specified column from this csv. 
+For example, in the form of a list where each new value begins with a new line:
+
+readcsv.py -path_cvs C:\example.csv -col_name Marker_Strategy
+______________________________
+22-48-48
+22-48-48
+22-48-48
+90-90
+90-90
+90-90
+90-90
+90-90
+90-90-90
+90-90-90
+90-90-90
+90-90-90
+90-90-90
+90-90-90
+22-48-48
+………………… etc.
+
+Hint: CSV file may have a title bar containing an invalid characters (maybe you noticed in example Market Strategy converted to Marker_Strategy) 
+To get around the problem, you may need to clean the headers. For example, deal with invalid characters using regular expression.
+
