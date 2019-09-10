@@ -1,0 +1,14 @@
+﻿I apologize for the delay. Finally, I am sending you the text of the lecture and the new homework. The main thing that stopped me from doing this was the desire to immediately connect this homework with obtaining information from the database and working with real SQL. 
+But still I came to the conclusion that this topic requires a separate lesson and cannot be given completely for independent study. 
+
+Therefore, so far there are 2 tasks for converting one data type to another:
+
+Mandatory task:
+the input data is attached to the letter in the csv format (user_details.csv) with information about certain users.  Among other things, there are password hashes that shouldn't  be shown. The task is to convert these records to JSON without showing the hash in the field structure.
+As before, the command-line utility will be the best design for such a task.
+E.g. convert.py -csv <Path to CSV> -json <Path and name of JSON file>
+
+
+Advanced:
+A SQL dump with data is attached to the email too (the data is the same as in user_details.csv) - is a dump in MySQL. The task is the same as for the mandatory task, you only need to convert the dump to JSON directly.
+Hint: convert to csv as first step and then to json.
