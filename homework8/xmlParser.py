@@ -41,18 +41,19 @@ if __name__ == '__main__':
             if government not in unique_governments:
                 unique_governments.append(government.strip())
             if " " in name:
-                country_government.append((name, government.strip()))
+                # country_government.append((name, government.strip()))
+                country_government.append(government.strip())
 
 
         print("\tUnique countries governments: {}\n".format(len(unique_governments)))
         print(', '.join(sorted(unique_governments)))
         print("\n")
-        print("\tCountries with two words name and their governments: {}\n".format(len(country_government)))
-        for country, gov in sorted(country_government):
-            print("{} - {}".format(country, gov))
+        print("\tGovernments for countries with space in name: {}\n".format(len(set(country_government))))
+        # for country, gov in sorted(country_government):
+        #     print("{} - {}".format(country, gov))
+        print(', '.join(sorted(country_government)))
 
 
-    # and " " in name
     except Exception as e:
         print("\nError")
         print(e)
