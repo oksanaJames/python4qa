@@ -1,50 +1,19 @@
-import sqlite3
+from sqlalchemy import create_engine, Table, Column, Integer, Date, Numeric, String, MetaData, CheckConstraint, ForeignKey
+from sqlalchemy.sql import select
 import os
 import traceback
-import datetime
 from sqlite3 import Error
+from collections import OrderedDict
 import csv
-
+from datetime import datetime
 
 dbName = 'sqllite.db'
+format = '%Y-%m-%d'
+listWithDicts = []
 
 
-def sql_connection(dbname):
-    try:
-        con = sqlite3.connect(dbname)
-        return con
-    except Error:
-        print(Error)
-
-
-def execute_query(con, query):
-    cursorObj = con.cursor()
-    cursorObj.execute(query)
-    con.commit()
-
-
-def insert_into_table(tablename, values):
-    return "INSERT INTO {} VALUES{}".format(tablename, values)
-
-
-def sql_fetch(con, tablename, column, value):
-    cursorObj = con.cursor()
-    cursorObj.execute('SELECT * FROM {} WHERE {} = "{}"'.format(tablename, column, value))
-    rows = cursorObj.fetchall()
-    for row in rows:
-        print(row)
-
-
-def read_file(filename):
-    valuesList = []
-    global headers, row
-    with open(filename, 'r') as csv_file:
-        csv_reader = csv.reader(csv_file)
-        headers = next(csv_reader)
-
-        for row in csv_reader:
-            valuesList.append(tuple(row))
-    return valuesList
+def create_db_engine(db):
+    return create_engine('sqlite:///{}'.format(db))
 
 
 if __name__ == '__main__':
@@ -52,35 +21,71 @@ if __name__ == '__main__':
         print('\n')
         print('-----start-----')
         print('\n')
-        start = datetime.datetime.now()
-        projectTableCreate = "CREATE TABLE project(name text PRIMARY KEY, description text, deadline date)"
-        tasksTableCreate = "CREATE TABLE tasks(id int PRIMARY KEY, priority int, details text, status text, deadline date," \
-                           "completed date, project text, FOREIGN KEY (project) REFERENCES project(name))"
-
         # check id database exists and create if not
         if not os.path.exists(dbName):
-            con = sql_connection(dbName)
+            engine = create_db_engine(dbName)
         else:
             os.remove(dbName)
-            con = sql_connection(dbName)
+            engine = create_db_engine(dbName)
 
-        # create tables 'project' and 'tasks'
-        execute_query(con, projectTableCreate)
-        execute_query(con, tasksTableCreate)
+        con = engine.connect()
+        metadata = MetaData()
 
-        insertValues = []
-        # read csv file and insert into 'project' table
-        insertValues = read_file('project.csv')
-        execute_query(con, insert_into_table("project", str(insertValues).strip('[]')))
-        del insertValues[:]
+        project = Table('project', metadata, Column('name', String(50), primary_key=True),
+           Column('description', String(50)),
+           Column('deadline', Date)
+        )
 
-        # read csv file and insert into 'tasks' table
-        insertValues = read_file('tasks.csv')
-        execute_query(con, insert_into_table("tasks", str(insertValues).strip('[]')))
-        del insertValues[:]
+        tasks = Table('tasks', metadata, Column('id', Integer, primary_key=True),
+                      Column('priority', Integer),
+                      Column('details', String(50)),
+                      Column('status', String(50)),
+                      Column('deadline', Date),
+                      Column('completed', Date, nullable=True),
+                      Column('project', String(50), ForeignKey('project.name'))
+        )
+
+        metadata.create_all(engine)
+        print("Created tables:\n{}".format(engine.table_names()))
+
+        with open('project.csv', 'r', encoding='utf-8-sig') as csv_file:
+            csv_reader = csv.reader(csv_file)
+            headers = next(csv_reader)
+
+            # convert string date to python datetime objects and replace in dict
+            for row in csv_reader:
+                new = dict(zip(headers, row))
+                for key, value in new.items():
+                    if 'deadline' in key:
+                        new[key] = datetime.strptime(value, format)
+                listWithDicts.append(new.copy())
+
+        # insert values to table 'project'
+        con.execute(project.insert(), listWithDicts)
+        del listWithDicts[:]
+
+        with open('tasks.csv', 'r', encoding='utf-8-sig') as csv_file:
+            csv_reader = csv.reader(csv_file)
+            headers = next(csv_reader)
+
+            # convert string date to python datetime objects  and replace in dict
+            for row in csv_reader:
+                new = dict(zip(headers, row))
+                for key, value in new.items():
+                    if 'deadline' in key or 'completed' in key:
+                        new[key] = datetime.strptime(value, format)
+                listWithDicts.append(new.copy())
+
+        # insert values to table 'tasks'
+        con.execute(tasks.insert(), listWithDicts)
+        del listWithDicts[:]
 
         # select * from tasks where project = 'REFINITIV'
-        sql_fetch(con, "tasks", "project", "REFINITIV")
+        print("\nSelecting all records from 'tasks' table where project is 'REFINITIV'..\n")
+        s = select([tasks]).where(tasks.c.project == 'REFINITIV')
+        result = con.execute(s)
+        for row in result:
+            print(row)
 
 
     except Exception as e:
@@ -91,3 +96,5 @@ if __name__ == '__main__':
     finally:
         print('\n')
         print('-----end-----')
+
+
