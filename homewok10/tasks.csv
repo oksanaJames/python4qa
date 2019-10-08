@@ -1,0 +1,8 @@
+﻿id,priority,details,status,deadline,completed,project
+1,1,development of the multi-functional system,new,2019-12-31,,REFINITIV
+2,1,add payment systems to on-line shop,pending,2020-05-05,,amazon
+3,2,SFTP unified storage,done,2019-07-15,2019-09-05,cisco
+4,3,database migration,cancelled,2019-12-31,,HLI
+5,1,standalone metrics gathering client,new,2020-02-05,,ziften
+6,1,database migration,new,2019-12-31,,REFINITIV
+7,1,tools migrations,done,2019-05-31,,REFINITIV
