@@ -1,0 +1,28 @@
+﻿тепер попрацюємо з NoSQL базою.
+Треба встановити собі MongoDB Server - тут все докладно описано https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/
+
+Я встановив та перевірив - воно таки працює локально. Тобто по localhost port 27017 сервіс доступний та приймає команди та встановлює з'єднання
+{"bindIp":"127.0.0.1","port":{"$numberInt":"27017"}},"service":true,"storage":{"dbPath":"C:\\Program Files\\MongoDB\\Server\\4.2\\data"
+Чи ставити ім'я користувача чи пароль на базу ваша справа.
+Код для підключення може бути такого типу - якщо ви хочете врахувати будь-який варіант:
+from pymongo import MongoClient
+
+
+def _connect_mongo(host, port, username, password, db):
+   
+
+    if username and password:
+        mongo_uri = 'mongodb://%s:%s@%s:%s/%s' % (username, password, host, port, db)
+        conn = MongoClient(mongo_uri)
+    else:
+        conn = MongoClient(host, port)
+
+
+    return conn[db]
+Що треба зробити з точку зору Python:
+1.	Підключитися до вашої локального сервера MongoDB
+2.	Створити базу - наприклад test
+3.	Створити 2 пусті колекції - project та tasks
+4.	Взяти таблиці project та tasks з минулого завдання #10 та перегнати разом з даними в документи в середені відповідних колекцій.
+Є декілька варіантів, як це зробити - на ваш вибір, наприклад через конвертацію в json.
+5.	Вивести на екран назви всіх проектів в яких є таски зі статусом canceled.

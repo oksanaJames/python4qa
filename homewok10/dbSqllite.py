@@ -46,12 +46,8 @@ def read_file(filename):
             valuesList.append(tuple(row))
     return valuesList
 
-
-if __name__ == '__main__':
+def main():
     try:
-        print('\n')
-        print('-----start-----')
-        print('\n')
         projectTableCreate = "CREATE TABLE project(name text PRIMARY KEY, description text, deadline date)"
         tasksTableCreate = "CREATE TABLE tasks(id int PRIMARY KEY, priority int, details text, status text, deadline date," \
                            "completed date, project text, FOREIGN KEY (project) REFERENCES project(name))"
@@ -87,6 +83,7 @@ if __name__ == '__main__':
         print(e)
         print('\n')
         traceback.print_exc()
-    finally:
-        print('\n')
-        print('-----end-----')
+
+
+if __name__ == '__main__':
+    main()
