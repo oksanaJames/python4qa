@@ -5,10 +5,10 @@ import fnmatch
 import os
 import json
 
-# Create module for files and folders search using os.walk, os.path.join, fnmatch
+"""Create module for files and folders search using os.walk, os.path.join, fnmatch"""
 
 
-def find(folder, name=None, show_dirs=True, show_files=True):
+def find_object(folder, name=None, show_dirs=True, show_files=True):
     """
     :param folder: path to a system folder from where to start searching
     :param name: file/directory name pattern, allows using '*' and '?' symbols
@@ -49,4 +49,4 @@ def parse_cmd_args():
 
 if __name__ == '__main__':
     args = parse_cmd_args()
-    print(json.dumps(find(*args), indent=4))
+    print(json.dumps(find_object(*args), indent=4))
